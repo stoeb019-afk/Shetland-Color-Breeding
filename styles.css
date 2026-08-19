@@ -4,9 +4,9 @@
 
 :root {
   --primary-blue: #0077b6;
-  --light-blue-bg: #DBE5E8; /* 1. Light blue color */
+  --light-blue-bg: #DBE5E8;
   --button-hover-blue: #005f93;
-  --button-red: #AF2811; /* 4. Custom red color */
+  --button-red: #AF2811;
   --text-dark: #2d3748;
   --border-color: #cbd5e1;
 }
@@ -28,7 +28,8 @@ body {
   margin: 0 auto;
 }
 
-h1, h2 {
+h1,
+h2 {
   font-family: 'Roboto', sans-serif;
   font-size: 1.85rem;
   font-weight: 700;
@@ -62,7 +63,9 @@ h3 {
   max-width: 900px;
 }
 
-select, label, option {
+select,
+label,
+option {
   font-family: 'Roboto', sans-serif;
 }
 
@@ -74,7 +77,9 @@ button {
   border: none;
   cursor: pointer;
   padding: 8px 18px;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
 }
 
 button:hover {
@@ -105,23 +110,33 @@ img {
   margin-bottom: 15px;
 }
 
-/* 1. Base color, pattern, and spotting dropdown boxes styled with light blue background (#DBE5E8) */
+
+/* Base color, pattern, and spotting dropdown boxes */
+
 .selectors select {
   padding: 8px 30px 8px 12px;
   font-size: 0.9rem;
   border: 1px solid var(--border-color);
   border-radius: 0;
-  background-color: var(--light-blue-bg); /* 1. Changed from white to #DBE5E8 */
+  background-color: var(--light-blue-bg);
   color: var(--text-dark);
   text-align: center;
   text-align-last: center;
+
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+
   background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232D3748%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
+
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 9px auto;
+}
+
+.selectors select:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 .image-container {
@@ -144,7 +159,16 @@ img {
   line-height: 1.5;
 }
 
-/* 2. Forces paragraph breaks and spacing for popup text paragraphs */
+
+/* ==========================================
+   DESCRIPTION PARAGRAPHS
+   ========================================== */
+
+/*
+   Each selected genetics description is now
+   inserted as its own <p> element.
+*/
+
 .description p,
 #description p {
   display: block;
@@ -157,9 +181,17 @@ img {
   margin-bottom: 0;
 }
 
-/* 3. Hidden by default on page load; centered side-by-side when visible */
+
+/* ==========================================
+   SHEEP BUTTONS
+   ========================================== */
+
+/*
+   Hidden until all three selections are made.
+*/
+
 #sheepButtons {
-  display: none; /* 3. Hidden on initial load */
+  display: none;
   justify-content: center;
   align-items: center;
   gap: 15px;
@@ -167,10 +199,16 @@ img {
   width: 100%;
 }
 
-/* 3. Added class for JS toggle to maintain flex centering when displayed */
+
+/*
+   JavaScript adds this class once the user
+   has selected base color, pattern, and spotting.
+*/
+
 #sheepButtons.visible {
   display: flex !important;
 }
+
 
 #sheepButtons button {
   background-color: var(--button-red);
@@ -237,10 +275,14 @@ img {
   margin-bottom: 20px;
 }
 
-/* 4. Updated Calculate Offspring Outcomes button to red with white text */
+
+/* ==========================================
+   CALCULATE BUTTON
+   ========================================== */
+
 #calculateBreed {
-  background-color: var(--button-red); /* 4. Red background (#AF2811) */
-  color: #ffffff; /* 4. White text */
+  background-color: var(--button-red);
+  color: #ffffff;
   font-size: 0.95rem;
   padding: 10px 24px;
 }
@@ -260,7 +302,10 @@ img {
 
 .results-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(220px, 1fr)
+  );
   gap: 15px;
   margin-top: 15px;
 }
@@ -276,4 +321,55 @@ img {
 .result-card img {
   max-width: 160px;
   margin: 0 auto 10px auto;
+}
+
+
+/* ==========================================
+   RESULT TEXT
+   ========================================== */
+
+.result-card h4 {
+  margin: 8px 0;
+}
+
+.result-card p {
+  margin: 0;
+}
+
+
+/* ==========================================
+   MOBILE RESPONSIVE STYLES
+   ========================================== */
+
+@media (max-width: 600px) {
+
+  body {
+    padding: 15px 10px;
+  }
+
+  .selectors {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .selectors select {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  #sheepButtons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #sheepButtons button {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .parent-card {
+    width: 100%;
+    max-width: none;
+  }
+
 }
