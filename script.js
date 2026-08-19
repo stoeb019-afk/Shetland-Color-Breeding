@@ -144,10 +144,13 @@ function updateImage() {
     currentBase;
 
 
-  // Base color only
+  // ==========================================
+  // BASE COLOR ONLY
+  // ==========================================
   //
   // Black_.png
   // Brown_.png
+  //
 
   if (
     !currentPattern &&
@@ -159,11 +162,15 @@ function updateImage() {
   }
 
 
-  // Pattern
+  // ==========================================
+  // PATTERN
+  // ==========================================
   //
   // Black_Solid.png
   // Black_White.png
+  // Black_Katmoget.png
   // etc.
+  //
 
   if (currentPattern) {
 
@@ -173,9 +180,12 @@ function updateImage() {
   }
 
 
-  // Spotting
+  // ==========================================
+  // SPOTTING
+  // ==========================================
   //
   // Actual filename uses "_Spot"
+  //
 
   if (currentSpot === "yes") {
 
@@ -199,11 +209,48 @@ function updateImage() {
 // ==========================================
 // UPDATE DESCRIPTION
 // ==========================================
+//
+// Each selection gets its own paragraph.
+//
+// Example:
+//
+// Base color paragraph
+//
+// Pattern paragraph
+//
+// Spotting paragraph
+//
+// The paragraphs remain stacked together.
+//
 
 function updateDescription() {
 
+  // ==========================================
+  // NOTHING SELECTED
+  // ==========================================
+
+  if (!currentBase) {
+
+    description.innerHTML = `
+      <p>
+        Select a base color to start learning about
+        Shetland sheep genetics.
+      </p>
+    `;
+
+    buttonsDiv.classList.remove("visible");
+
+    return;
+
+  }
+
+
   let desc = "";
 
+
+  // ==========================================
+  // BASE COLOR PARAGRAPH
+  // ==========================================
 
   if (
     currentBase &&
@@ -211,13 +258,17 @@ function updateDescription() {
   ) {
 
     desc += `
-      <span class="desc-part">
+      <p>
         ${baseDescriptions[currentBase]}
-      </span>
+      </p>
     `;
 
   }
 
+
+  // ==========================================
+  // PATTERN PARAGRAPH
+  // ==========================================
 
   if (
     currentPattern &&
@@ -225,13 +276,17 @@ function updateDescription() {
   ) {
 
     desc += `
-      <span class="desc-part">
+      <p>
         ${patternDescriptions[currentPattern]}
-      </span>
+      </p>
     `;
 
   }
 
+
+  // ==========================================
+  // SPOTTING PARAGRAPH
+  // ==========================================
 
   if (
     currentSpot &&
@@ -239,28 +294,29 @@ function updateDescription() {
   ) {
 
     desc += `
-      <span class="desc-part">
+      <p>
         ${spotDescriptions[currentSpot]}
-      </span>
+      </p>
     `;
 
   }
 
 
-  if (!desc) {
-
-    desc =
-      "Select a base color to start learning about Shetland sheep genetics.";
-
-  }
-
+  // ==========================================
+  // DISPLAY ALL PARAGRAPHS
+  // ==========================================
 
   description.innerHTML =
     desc;
 
 
-  // Buttons only appear after
-  // all three selections are made.
+  // ==========================================
+  // SHOW / HIDE SHEEP BUTTONS
+  // ==========================================
+  //
+  // The CSS controls the actual display.
+  // We only add/remove the "visible" class.
+  //
 
   if (
     currentBase &&
@@ -268,13 +324,11 @@ function updateDescription() {
     currentSpot
   ) {
 
-    buttonsDiv.style.display =
-      "block";
+    buttonsDiv.classList.add("visible");
 
   } else {
 
-    buttonsDiv.style.display =
-      "none";
+    buttonsDiv.classList.remove("visible");
 
   }
 
@@ -292,10 +346,15 @@ baseSelect.addEventListener(
     currentBase =
       baseSelect.value;
 
+    // Changing the base color resets
+    // the pattern and spotting choices.
+
     currentPattern = "";
 
     currentSpot = "";
 
+
+    // Enable pattern selection.
 
     patternSelect.disabled =
       !currentBase;
@@ -303,6 +362,9 @@ baseSelect.addEventListener(
     patternSelect.value =
       "";
 
+
+    // Spotting remains disabled until
+    // a pattern is selected.
 
     spotsSelect.disabled =
       true;
@@ -330,8 +392,12 @@ patternSelect.addEventListener(
     currentPattern =
       patternSelect.value;
 
+    // Changing the pattern resets spotting.
+
     currentSpot = "";
 
+
+    // Enable spotting selection.
 
     spotsSelect.disabled =
       !currentPattern;
@@ -380,11 +446,11 @@ document
 
       description.innerHTML = `
 
-        <span class="desc-part">
+        <p>
           Great! This sheep matches the selection you made.
-        </span>
+        </p>
 
-        <span class="desc-part">
+        <p>
           Keep in mind, this is just the very basics of
           Shetland sheep color genetics. There are other
           factors like <strong>extension</strong>,
@@ -392,13 +458,13 @@ document
           <strong>modifiers</strong> that can change the
           shade and pattern of the fleece in ways we
           haven't fully covered here.
-        </span>
+        </p>
 
-        <span class="desc-part">
+        <p>
           Use this as a starting point to explore more
           complex genetics and see how real-life sheep
           can vary even with the same base color and pattern.
-        </span>
+        </p>
 
       `;
 
@@ -418,12 +484,12 @@ document
 
       description.innerHTML = `
 
-        <span class="desc-part">
+        <p>
           Hmm, your sheep looks different from the
           options selected.
-        </span>
+        </p>
 
-        <span class="desc-part">
+        <p>
           Remember, what we're showing here is just
           the basics of Shetland sheep color genetics.
           Real sheep can vary due to
@@ -431,13 +497,13 @@ document
           <strong>intensity</strong>, and other
           <strong>modifiers</strong> that change how
           colors and patterns appear.
-        </span>
+        </p>
 
-        <span class="desc-part">
+        <p>
           This is a great opportunity to explore and
           compare your sheep to see how these additional
           genes influence the fleece.
-        </span>
+        </p>
 
       `;
 
@@ -953,7 +1019,9 @@ calculateBtn.addEventListener(
             : `${probability.toFixed(1)}%`;
 
 
-        // Create result card
+        // ==================================
+        // CREATE RESULT CARD
+        // ==================================
 
         const card =
           document.createElement("div");
@@ -962,7 +1030,9 @@ calculateBtn.addEventListener(
           "result-card";
 
 
-        // Create image
+        // ==================================
+        // CREATE IMAGE
+        // ==================================
 
         const resultImage =
           document.createElement("img");
@@ -978,7 +1048,9 @@ calculateBtn.addEventListener(
         );
 
 
-        // Create heading
+        // ==================================
+        // CREATE HEADING
+        // ==================================
 
         const heading =
           document.createElement("h4");
@@ -987,7 +1059,9 @@ calculateBtn.addEventListener(
           key;
 
 
-        // Create probability text
+        // ==================================
+        // CREATE PROBABILITY TEXT
+        // ==================================
 
         const probabilityText =
           document.createElement("p");
@@ -1006,7 +1080,9 @@ calculateBtn.addEventListener(
         );
 
 
-        // Assemble card
+        // ==================================
+        // ASSEMBLE CARD
+        // ==================================
 
         card.appendChild(
           resultImage
@@ -1021,7 +1097,9 @@ calculateBtn.addEventListener(
         );
 
 
-        // Add card
+        // ==================================
+        // ADD CARD TO RESULTS
+        // ==================================
 
         resultsList.appendChild(
           card
@@ -1031,7 +1109,9 @@ calculateBtn.addEventListener(
     );
 
 
-    // Show results
+    // ======================================
+    // SHOW RESULTS
+    // ======================================
 
     resultsContainer.hidden =
       false;
