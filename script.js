@@ -11,82 +11,76 @@ const buttonsDiv = document.getElementById("sheepButtons");
 
 // Descriptions
 const baseDescriptions = {
-  Black: "Shetlands come in two base colors, black and brown. Black base color is dominant and a sheep only needs one copy of the black gene for it to show. Black base color produces black pigment in both wool and skin.",
-  Brown: "Shetlands come in two base colors, black and brown. Brown base color is recessive and a sheep needs two copies of the brown gene for it to show. Breeding to a brown sheep can show if the other parent carries brown."
+  Black: "Shetlands come in two base colors, black and brown. Black base color is dominant and a sheep only needs one copy of the black gene for it to show.ack base color produces black pigment in both wool and skin.",
+  Brown: "Shetlands come in two base colors, black and brown. Brown base color is ressesive and a sheep needs two copies of the brown gene for it to show. Breeding to a brown sheep can show if the other parent carries brown."
 };
 
 const patternDescriptions = {
-  solid: "Patterns overlay the base color. Solid pattern shows the base color evenly throughout the body and is recessive to all other patterns.",
+  solid: "Patterns overlay the base color. Solid pattern shows the base color evenly throughout the body and is ressesive to all other patterns.",
   white: "Patterns overlay the base color. White pattern covers the base color, leaving only small traces of the base color visible if any. The white pattern is dominant to all other patterns.",
-  Katmoget: "Patterns overlay the base color. Katmoget pattern gives a light body with darker belly and face mask. It is dominant only to the solid pattern but is very common.",
+  Katmoget: "Patterns overlay the base color. Katmoget pattern gives a light body with darker belly and face mask. It is dominant only to the solid pattern but is very common. It is sometime co-dominante with Gulmoget or Fading creatin a mixed pattern.",
   Gulmoget: "Patterns overlay the base color. Gulmoget pattern is the reverse of Katmoget — dark body with lighter belly and eye stripes. It is dominant to all other patterns except white.",
-  Fading: "Patterns overlay the base color. Fading pattern lightens with age, often starting darker at birth and becoming paler in the body."
+  Fading: "Patterns overlay the base color. Fading pattern lightens with age, often starting darker at birth and becoming paler in the body. It is dominant to Karmoget and Solid but recessive to Gulmoget and White."
 };
 
 const spotDescriptions = {
-  yes: "Spotting is recessive and a sheep needs two copies of the gene to show spots. Spotted sheep have random white or colored patches overlaying base and pattern.",
+  yes: "Spotting is reccessive and a sheep needs two copies of the gene to show spots. Spotted sheep have random white or colored patches overlaying base and pattern. Even if your sheep is almost completely white, it is technically black or brown with a large white spot. Shetland come in numerous different spotting patterns, most have names in the shetland dialect, describing the specific spotting pattern. Alough you may be able to breed for spots there is no way to breed for a specifc spotting pattern.",
   no: "Spotting is recessive, so even if a sheep does not show spots, it may carry the spotting gene."
 };
 
+// Track current selections
 let currentBase = "";
 let currentPattern = "";
 let currentSpot = "";
 
-// Normalizes any pattern string (dropdown value or genetic allele) to match GitHub file casing
-function formatPatternName(pattern) {
-  if (!pattern) return "";
-  const p = pattern.toLowerCase();
-  if (p === "solid" || p === "aa") return "Solid";
-  if (p === "white" || p === "awt") return "White";
-  if (p === "katmoget" || p === "ab") return "Katmoget";
-  if (p === "gulmoget" || p === "agt") return "Gulmoget";
-  if (p === "fading" || p === "greying" || p === "ag") return "Fading";
-  return pattern;
-}
-
-// Builds the exact relative image URL matching your repository files
-function buildImagePath(base, pattern, spot) {
-  if (!base) return "images/Blank_.png";
-
-  const formattedBase = (base.toLowerCase().includes("brown") || base === "bb") ? "Brown" : "Black";
-  const formattedPattern = formatPatternName(pattern);
-  const isSpotted = (spot === "yes" || spot === "ss" || spot === "_Spot" || spot === "Spot");
-  const spotSuffix = isSpotted ? "_Spot" : "";
-
-  // When only Base color is selected (e.g., Black_.png or Brown_.png)
-  if (!formattedPattern) {
-    return `images/${formattedBase}_.png`;
+// Update the image
+function updateImage() {
+  if (!currentBase) {
+    image.src = "images/Blank_.png";
+    return;
   }
 
-  // Exact file path construction (e.g., images/Black_Solid_Spot.png)
-  return `images/${formattedBase}_${formattedPattern}${spotSuffix}.png`;
+  let fileName = currentBase;
+
+  if (!currentPattern && !currentSpot) fileName += "_";
+  if (currentPattern) fileName += `_${currentPattern}`;
+  if (currentSpot === "yes") fileName += `_spot`;
+
+  fileName += ".png";
+  image.src = `images/${fileName}`;
 }
 
-function updateImage() {
-  image.src = buildImagePath(currentBase, currentPattern, currentSpot);
-}
-
+// Update description
 function updateDescription() {
   let desc = "";
 
   if (currentBase && baseDescriptions[currentBase]) {
     desc += `<span class="desc-part">${baseDescriptions[currentBase]}</span>`;
   }
+
   if (currentPattern && patternDescriptions[currentPattern]) {
     desc += `<span class="desc-part">${patternDescriptions[currentPattern]}</span>`;
   }
+
   if (currentSpot && spotDescriptions[currentSpot]) {
     desc += `<span class="desc-part">${spotDescriptions[currentSpot]}</span>`;
   }
+
   if (!desc) {
     desc = "Select a base color to start learning about Shetland sheep genetics.";
   }
 
   description.innerHTML = desc;
-  buttonsDiv.style.display = (currentBase && currentPattern && currentSpot) ? "block" : "none";
+
+  // Show buttons only if all selections are made
+  if (currentBase && currentPattern && currentSpot) {
+    buttonsDiv.style.display = "block";
+  } else {
+    buttonsDiv.style.display = "none";
+  }
 }
 
-// Explorer Control Event Listeners
+// Event listeners
 baseSelect.addEventListener("change", () => {
   currentBase = baseSelect.value;
   currentPattern = "";
@@ -121,15 +115,29 @@ spotsSelect.addEventListener("change", () => {
 
 document.getElementById("buttonThis").addEventListener("click", () => {
   description.innerHTML = `
-    <span class="desc-part">Great! This sheep matches the selection you made.</span>
-    <span class="desc-part">Keep in mind, this covers the basics. Modifiers, extension, and intensity genes can alter fleece shade in real life.</span>
+    <span class="desc-part">
+    Great! This sheep matches the selection you made.
+    </span>
+    <span class="desc-part">
+    Keep in mind, this is just the very basics of Shetland sheep color genetics. There are other factors like <strong>extension</strong>, <strong>intensity</strong>, and <strong>modifiers</strong> that can change the shade and pattern of the fleece in ways we haven’t fully covered here.
+    </span>
+    <span class="desc-part">
+    Use this as a starting point to explore more complex genetics and see how real-life sheep can vary even with the same base color and pattern.
+    </span>
   `;
 });
 
 document.getElementById("buttonDifferent").addEventListener("click", () => {
   description.innerHTML = `
-    <span class="desc-part">Hmm, your sheep looks different from the options selected.</span>
-    <span class="desc-part">Real sheep can vary due to modifiers, extension, and intensity genes altering fleece appearance.</span>
+    <span class="desc-part">
+    Hmm, your sheep looks different from the options selected.
+    </span>
+    <span class="desc-part">
+    Remember, what we’re showing here is just the basics of Shetland sheep color genetics. Real sheep can vary due to <strong>extension</strong>, <strong>intensity</strong>, and other <strong>modifiers</strong> that change how colors and patterns appear.
+    </span>
+    <span class="desc-part">
+    This is a great opportunity to explore and compare your sheep to see how these additional genes influence the fleece.
+    </span>
   `;
 });
 
@@ -138,23 +146,32 @@ document.getElementById("buttonDifferent").addEventListener("click", () => {
 // SECTION 2: BREEDING CALCULATOR
 // ==========================================
 
+// Dominance Hierarchy Rank (White > Gulmoget > Greying > Katmoget > Solid)
 const patternRank = {
   "Awt": 5, // White
   "Agt": 4, // Gulmoget
-  "Ag":  3, // Fading
+  "Ag":  3, // Greying
   "Ab":  2, // Katmoget
   "Aa":  1  // Solid
+};
+
+const patternToFilename = {
+  "Awt": "white",
+  "Agt": "Gulmoget",
+  "Ag":  "Fading", // maps Greying to fading image
+  "Ab":  "Katmoget",
+  "Aa":  "solid"
 };
 
 const patternDisplayName = {
   "Awt": "White",
   "Agt": "Gulmoget",
-  "Ag":  "Fading",
+  "Ag":  "Greying",
   "Ab":  "Katmoget",
   "Aa":  "Solid"
 };
 
-// Parent Select Elements
+// Parent Elements
 const ramBase = document.getElementById("ramBase");
 const ramPattern1 = document.getElementById("ramPattern1");
 const ramPattern2 = document.getElementById("ramPattern2");
@@ -171,16 +188,27 @@ const calculateBtn = document.getElementById("calculateBreed");
 const resultsContainer = document.getElementById("breedingResults");
 const resultsList = document.getElementById("resultsList");
 
+// Determine expressed pattern based on allele dominance hierarchy
 function getExpressedPattern(p1, p2) {
-  return patternRank[p1] >= patternRank[p2] ? p1 : p2;
+  const r1 = patternRank[p1];
+  const r2 = patternRank[p2];
+
+  return r1 >= r2 ? p1 : p2;
 }
 
+// Update Image Previews
 function updateParentPreview(baseElem, p1Elem, p2Elem, spotElem, targetImg) {
+  const bVal = baseElem.value;
+  const baseColor = bVal.includes("bb") ? "Brown" : "Black";
+  
   const expressedAllele = getExpressedPattern(p1Elem.value, p2Elem.value);
-  targetImg.src = buildImagePath(baseElem.value, expressedAllele, spotElem.value);
+  const patternFile = patternToFilename[expressedAllele];
+  const spot = spotElem.value === "ss" ? "_spot" : "";
+
+  targetImg.src = `images/${baseColor}_${patternFile}${spot}.png`;
 }
 
-// Bind Parent Change Listeners
+// Add event listeners for parent inputs
 [ramBase, ramPattern1, ramPattern2, ramSpot].forEach(elem => {
   elem.addEventListener("change", () => updateParentPreview(ramBase, ramPattern1, ramPattern2, ramSpot, ramImage));
 });
@@ -193,6 +221,7 @@ function updateParentPreview(baseElem, p1Elem, p2Elem, spotElem, targetImg) {
 updateParentPreview(ramBase, ramPattern1, ramPattern2, ramSpot, ramImage);
 updateParentPreview(eweBase, ewePattern1, ewePattern2, eweSpot, eweImage);
 
+// Punnett combination helper
 function getCombos(a1, a2, b1, b2) {
   return [
     [a1, b1],
@@ -202,7 +231,7 @@ function getCombos(a1, a2, b1, b2) {
   ];
 }
 
-// Calculator Logic
+// Calculate outcomes
 calculateBtn.addEventListener("click", () => {
   const ramB = ramBase.value.split("");
   const eweB = eweBase.value.split("");
@@ -223,14 +252,15 @@ calculateBtn.addEventListener("click", () => {
 
     patternCombos.forEach(p => {
       const expressedAllele = getExpressedPattern(p[0], p[1]);
+      const patternFile = patternToFilename[expressedAllele];
       const displayPattern = patternDisplayName[expressedAllele];
 
       spotCombos.forEach(s => {
         const isSpotted = (s[0] === 's' && s[1] === 's');
-        const spotState = isSpotted ? "yes" : "no";
+        const spotSuffix = isSpotted ? "_spot" : "";
 
         const label = `${baseName} ${displayPattern}${isSpotted ? " (Spotted)" : ""}`;
-        const imageSrc = buildImagePath(baseName, expressedAllele, spotState);
+        const imageSrc = `images/${baseName}_${patternFile}${spotSuffix}.png`;
 
         if (!outcomes[label]) {
           outcomes[label] = { count: 0, imageSrc: imageSrc };
@@ -240,7 +270,7 @@ calculateBtn.addEventListener("click", () => {
     });
   });
 
-  // Render Results
+  // Render outcomes
   resultsList.innerHTML = "";
   Object.keys(outcomes).forEach(key => {
     const percentage = Math.round((outcomes[key].count / totalCombos) * 100);
