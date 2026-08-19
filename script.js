@@ -11,7 +11,7 @@ const buttonsDiv = document.getElementById("sheepButtons");
 
 // Descriptions
 const baseDescriptions = {
-  Black: "Shetlands come in two base colors, black and brown. Black base color is dominant and a sheep only needs one copy of the black gene for it to show.ack base color produces black pigment in both wool and skin.",
+  Black: "Shetlands come in two base colors, black and brown. Black base color is dominant and a sheep only needs one copy of the black gene for it to show. Black base color produces black pigment in both wool and skin.",
   Brown: "Shetlands come in two base colors, black and brown. Brown base color is ressesive and a sheep needs two copies of the brown gene for it to show. Breeding to a brown sheep can show if the other parent carries brown."
 };
 
@@ -28,26 +28,41 @@ const spotDescriptions = {
   no: "Spotting is recessive, so even if a sheep does not show spots, it may carry the spotting gene."
 };
 
-// Track current selections
+// Map pattern key to actual file casing
+const patternToFileCase = {
+  "solid": "Solid",
+  "white": "White",
+  "Katmoget": "Katmoget",
+  "Gulmoget": "Gulmoget",
+  "Fading": "Fading",
+  "Solid": "Solid",
+  "White": "White"
+};
+
 let currentBase = "";
 let currentPattern = "";
 let currentSpot = "";
 
-// Update the image
-function updateImage() {
-  if (!currentBase) {
-    image.src = "images/Blank_.png";
-    return;
+// Helper to assemble accurate image file path
+function buildImagePath(base, pattern, spot) {
+  if (!base) return "images/Blank_.png";
+  
+  let formattedPattern = pattern ? patternToFileCase[pattern] : "";
+  let spotSuffix = spot === "yes" || spot === "ss" ? "_spot" : "";
+
+  if (!formattedPattern && !spotSuffix) {
+    return `images/${base}_.png`;
+  }
+  if (!formattedPattern && spotSuffix) {
+    return `images/${base}_Solid${spotSuffix}.png`;
   }
 
-  let fileName = currentBase;
+  return `images/${base}_${formattedPattern}${spotSuffix}.png`;
+}
 
-  if (!currentPattern && !currentSpot) fileName += "_";
-  if (currentPattern) fileName += `_${currentPattern}`;
-  if (currentSpot === "yes") fileName += `_spot`;
-
-  fileName += ".png";
-  image.src = `images/${fileName}`;
+// Update Explorer Image
+function updateImage() {
+  image.src = buildImagePath(currentBase, currentPattern, currentSpot);
 }
 
 // Update description
@@ -72,7 +87,6 @@ function updateDescription() {
 
   description.innerHTML = desc;
 
-  // Show buttons only if all selections are made
   if (currentBase && currentPattern && currentSpot) {
     buttonsDiv.style.display = "block";
   } else {
@@ -80,7 +94,7 @@ function updateDescription() {
   }
 }
 
-// Event listeners
+// Event listeners for Explorer Controls
 baseSelect.addEventListener("change", () => {
   currentBase = baseSelect.value;
   currentPattern = "";
@@ -146,7 +160,6 @@ document.getElementById("buttonDifferent").addEventListener("click", () => {
 // SECTION 2: BREEDING CALCULATOR
 // ==========================================
 
-// Dominance Hierarchy Rank (White > Gulmoget > Greying > Katmoget > Solid)
 const patternRank = {
   "Awt": 5, // White
   "Agt": 4, // Gulmoget
@@ -156,11 +169,11 @@ const patternRank = {
 };
 
 const patternToFilename = {
-  "Awt": "white",
+  "Awt": "White",
   "Agt": "Gulmoget",
-  "Ag":  "Fading", // maps Greying to fading image
+  "Ag":  "Fading",
   "Ab":  "Katmoget",
-  "Aa":  "solid"
+  "Aa":  "Solid"
 };
 
 const patternDisplayName = {
@@ -188,7 +201,6 @@ const calculateBtn = document.getElementById("calculateBreed");
 const resultsContainer = document.getElementById("breedingResults");
 const resultsList = document.getElementById("resultsList");
 
-// Determine expressed pattern based on allele dominance hierarchy
 function getExpressedPattern(p1, p2) {
   const r1 = patternRank[p1];
   const r2 = patternRank[p2];
@@ -196,19 +208,19 @@ function getExpressedPattern(p1, p2) {
   return r1 >= r2 ? p1 : p2;
 }
 
-// Update Image Previews
+// Update Image Previews for Parents
 function updateParentPreview(baseElem, p1Elem, p2Elem, spotElem, targetImg) {
   const bVal = baseElem.value;
   const baseColor = bVal.includes("bb") ? "Brown" : "Black";
   
   const expressedAllele = getExpressedPattern(p1Elem.value, p2Elem.value);
   const patternFile = patternToFilename[expressedAllele];
-  const spot = spotElem.value === "ss" ? "_spot" : "";
+  const isSpotted = spotElem.value === "ss" ? "yes" : "no";
 
-  targetImg.src = `images/${baseColor}_${patternFile}${spot}.png`;
+  targetImg.src = buildImagePath(baseColor, patternFile, isSpotted);
 }
 
-// Add event listeners for parent inputs
+// Bind event listeners for calculator parent inputs
 [ramBase, ramPattern1, ramPattern2, ramSpot].forEach(elem => {
   elem.addEventListener("change", () => updateParentPreview(ramBase, ramPattern1, ramPattern2, ramSpot, ramImage));
 });
@@ -217,11 +229,10 @@ function updateParentPreview(baseElem, p1Elem, p2Elem, spotElem, targetImg) {
   elem.addEventListener("change", () => updateParentPreview(eweBase, ewePattern1, ewePattern2, eweSpot, eweImage));
 });
 
-// Initial Parent Previews
+// Initial Parent Previews Initialization
 updateParentPreview(ramBase, ramPattern1, ramPattern2, ramSpot, ramImage);
 updateParentPreview(eweBase, ewePattern1, ewePattern2, eweSpot, eweImage);
 
-// Punnett combination helper
 function getCombos(a1, a2, b1, b2) {
   return [
     [a1, b1],
@@ -257,10 +268,10 @@ calculateBtn.addEventListener("click", () => {
 
       spotCombos.forEach(s => {
         const isSpotted = (s[0] === 's' && s[1] === 's');
-        const spotSuffix = isSpotted ? "_spot" : "";
+        const spotState = isSpotted ? "yes" : "no";
 
         const label = `${baseName} ${displayPattern}${isSpotted ? " (Spotted)" : ""}`;
-        const imageSrc = `images/${baseName}_${patternFile}${spotSuffix}.png`;
+        const imageSrc = buildImagePath(baseName, patternFile, spotState);
 
         if (!outcomes[label]) {
           outcomes[label] = { count: 0, imageSrc: imageSrc };
