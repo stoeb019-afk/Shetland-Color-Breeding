@@ -4,9 +4,9 @@
 
 :root {
   --primary-blue: #0077b6;
-  --light-blue-bg: #DBE5E8; /* 1. Updated blue color */
+  --light-blue-bg: #DBE5E8; /* 1. Light blue color */
   --button-hover-blue: #005f93;
-  --button-red: #AF2811; /* 4. Added custom red color */
+  --button-red: #AF2811; /* 4. Custom red color */
   --text-dark: #2d3748;
   --border-color: #cbd5e1;
 }
@@ -17,21 +17,20 @@
 
 body {
   margin: 0;
-  padding: 20px 15px; /* 5. Reduced padding for compact screen fit */
+  padding: 20px 15px;
   font-family: 'Roboto', sans-serif;
   background-color: #ffffff;
   color: var(--text-dark);
 }
 
 .container {
-  max-width: 900px; /* 5. Scaled down max-width slightly for laptop screens */
+  max-width: 900px;
   margin: 0 auto;
 }
 
-/* 1 & 5. Headings scaled down slightly for laptop fit */
 h1, h2 {
   font-family: 'Roboto', sans-serif;
-  font-size: 1.85rem; /* 5. Slightly smaller font size */
+  font-size: 1.85rem;
   font-weight: 700;
   text-align: center;
   margin-top: 0;
@@ -41,7 +40,7 @@ h1, h2 {
 
 h3 {
   font-family: 'Roboto', sans-serif;
-  font-size: 1.25rem; /* 5. Slightly smaller font size */
+  font-size: 1.25rem;
   font-weight: 500;
   margin-top: 0;
   margin-bottom: 10px;
@@ -50,7 +49,7 @@ h3 {
 
 .subtitle {
   text-align: center;
-  font-size: 0.95rem; /* 5. Slightly smaller text */
+  font-size: 0.95rem;
   margin-bottom: 20px;
   color: #475569;
 }
@@ -59,24 +58,22 @@ h3 {
   border: 0;
   height: 1px;
   background: var(--border-color);
-  margin: 25px auto; /* 5. Reduced spacing between sections */
+  margin: 25px auto;
   max-width: 900px;
 }
 
-/* 3. Dropdowns use Roboto font */
 select, label, option {
   font-family: 'Roboto', sans-serif;
 }
 
-/* 5. Base button style: sharp corners & scaled size */
 button {
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
-  font-size: 0.9rem; /* 5. Slightly smaller button text */
+  font-size: 0.9rem;
   border-radius: 0;
   border: none;
   cursor: pointer;
-  padding: 8px 18px; /* 5. Reduced padding */
+  padding: 8px 18px;
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
@@ -88,7 +85,6 @@ button:active {
   transform: translateY(1px);
 }
 
-/* All images have subtle rounding */
 img {
   border-radius: 5px;
   max-width: 100%;
@@ -106,22 +102,22 @@ img {
   gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 15px; /* 5. Reduced margin */
+  margin-bottom: 15px;
 }
 
-/* 2. Centered dropdown text and custom styled select arrows */
+/* 1. Base color, pattern, and spotting dropdown boxes styled with light blue background (#DBE5E8) */
 .selectors select {
   padding: 8px 30px 8px 12px;
   font-size: 0.9rem;
   border: 1px solid var(--border-color);
   border-radius: 0;
-  background-color: #ffffff;
+  background-color: var(--light-blue-bg); /* 1. Changed from white to #DBE5E8 */
+  color: var(--text-dark);
   text-align: center;
-  text-align-last: center; /* 2. Centers text inside dropdowns across browsers */
+  text-align-last: center;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  /* 2. Centered dropdown arrow using an embedded SVG */
   background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232D3748%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
   background-repeat: no-repeat;
   background-position: right 10px center;
@@ -131,47 +127,54 @@ img {
 .image-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 12px; /* 5. Reduced margin */
+  margin-bottom: 12px;
 }
 
 .image-container img {
-  max-width: 280px; /* 5. Scaled image down for laptop screens */
+  max-width: 280px;
   width: 100%;
 }
 
-/* 3. Expanded description pop-up styling */
 .description {
   text-align: center;
   font-size: 0.95rem;
-  max-width: 850px; /* 3. Spans wider across the screen */
+  max-width: 850px;
   width: 90%;
   margin: 0 auto 15px auto;
   line-height: 1.5;
 }
 
-/* 3. Separates multiple paragraph pop-ups with paragraph breaks */
-.description p {
+/* 2. Forces paragraph breaks and spacing for popup text paragraphs */
+.description p,
+#description p {
+  display: block;
   margin-top: 0;
   margin-bottom: 1rem;
 }
 
-.description p:last-child {
+.description p:last-child,
+#description p:last-child {
   margin-bottom: 0;
 }
 
-/* 4. Centered buttons side by side with custom color */
+/* 3. Hidden by default on page load; centered side-by-side when visible */
 #sheepButtons {
-  display: flex;
+  display: none; /* 3. Hidden on initial load */
   justify-content: center;
   align-items: center;
   gap: 15px;
-  margin-bottom: 20px;
+  margin: 0 auto 20px auto;
+  width: 100%;
 }
 
-/* 4. "This is my sheep" and "My sheep looks different" button styles */
+/* 3. Added class for JS toggle to maintain flex centering when displayed */
+#sheepButtons.visible {
+  display: flex !important;
+}
+
 #sheepButtons button {
-  background-color: var(--button-red); /* 4. Set to #AF2811 */
-  color: #ffffff; /* 4. White text */
+  background-color: var(--button-red);
+  color: #ffffff;
 }
 
 #sheepButtons button:hover {
@@ -185,15 +188,15 @@ img {
 
 .parents-container {
   display: flex;
-  gap: 15px; /* 5. Reduced gap */
+  gap: 15px;
   justify-content: center;
   flex-wrap: wrap;
   margin-bottom: 20px;
 }
 
 .parent-card {
-  background-color: var(--light-blue-bg); /* 1. Updated to #DBE5E8 */
-  padding: 15px; /* 5. Reduced padding */
+  background-color: var(--light-blue-bg);
+  padding: 15px;
   flex: 1;
   min-width: 260px;
   max-width: 420px;
@@ -220,7 +223,7 @@ img {
   border-radius: 0;
   background-color: #ffffff;
   text-align: center;
-  text-align-last: center; /* Centered dropdown text */
+  text-align-last: center;
 }
 
 .allele-pair-stacked {
@@ -234,15 +237,16 @@ img {
   margin-bottom: 20px;
 }
 
+/* 4. Updated Calculate Offspring Outcomes button to red with white text */
 #calculateBreed {
-  background-color: var(--light-blue-bg); /* 1. #DBE5E8 */
-  color: var(--text-dark);
+  background-color: var(--button-red); /* 4. Red background (#AF2811) */
+  color: #ffffff; /* 4. White text */
   font-size: 0.95rem;
   padding: 10px 24px;
 }
 
 #calculateBreed:hover {
-  background-color: #c4d4d9;
+  background-color: #8c200e;
 }
 
 
