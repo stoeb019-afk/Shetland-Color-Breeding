@@ -1,205 +1,845 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shetland Sheep Color Genetics Calculator</title>
-  <link rel="stylesheet" href="style.css">
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+
+  <title>Shetland Sheep Color Genetics</title>
+
+
+
+  <!-- Google Fonts: Roboto -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+
+
+  <link rel="stylesheet" href="styles.css?v=2.0">
+
 </head>
+
+
+
 <body>
 
-  <!-- SECTION 1: COLOR GENETICS EXPLORER -->
+
+
+  <!-- ========================================== -->
+
+  <!-- SECTION 1: COLOR GENETICS EXPLORER        -->
+
+  <!-- ========================================== -->
+
+
+
   <div class="container">
-    <h2>Shetland Color Genetics Explorer</h2>
+
+
+
+    <h1>Shetland Sheep Color Genetics</h1>
+
+
 
     <!-- Dropdowns -->
+
     <div class="selectors">
+
+
+
       <select id="baseColor">
-        <option value="">Select Base Color</option>
+
+        <option value="">-- Select Base Color --</option>
+
         <option value="Black">Black</option>
+
         <option value="Brown">Brown</option>
+
       </select>
+
+
 
       <select id="pattern" disabled>
-        <option value="">Select Pattern</option>
+
+        <option value="">-- Select Pattern --</option>
+
         <option value="solid">Solid</option>
+
         <option value="white">White</option>
+
         <option value="Katmoget">Katmoget</option>
+
         <option value="Gulmoget">Gulmoget</option>
+
         <option value="Fading">Fading</option>
+
       </select>
+
+
 
       <select id="spots" disabled>
-        <option value="">Select Spotting</option>
+
+        <option value="">-- Select Spotting --</option>
+
+        <option value="no">No Spotting</option>
+
         <option value="yes">Spotted</option>
-        <option value="no">Non-Spotted</option>
+
       </select>
+
+
+
     </div>
 
-    <!-- Image Display -->
+
+
+
+
+    <!-- Image -->
+
     <div class="image-container">
-      <img id="sheepImage" src="images/Blank_.png" alt="Shetland sheep" />
+
+
+
+      <img
+
+        id="sheepImage"
+
+        src="images/Blank_.png"
+
+        alt="Shetland sheep"
+
+      >
+
+
+
     </div>
 
-    <!-- Description Wrapper (DIV wrapper allows nested JS-inserted <p> elements) -->
-    <div id="description" class="description">
-      <p>Select a base color to start learning about Shetland sheep genetics.</p>
-    </div>
 
-    <!-- Buttons Wrapper -->
+
+
+
+    <!-- Description -->
+
+    <p id="description" class="description">
+
+      Select a base color to start learning about Shetland sheep genetics.
+
+    </p>
+
+
+
+
+
+    <!-- Buttons -->
+
     <div id="sheepButtons">
-      <button id="buttonThis">This is my sheep</button>
-      <button id="buttonDifferent">My sheep looks different</button>
+
+
+
+      <button type="button" id="buttonThis">
+
+        This is my sheep
+
+      </button>
+
+
+
+      <button type="button" id="buttonDifferent">
+
+        My sheep looks different
+
+      </button>
+
+
+
     </div>
+
+
+
   </div>
 
-  <!-- SECTION 2: BREEDING CALCULATOR -->
-  <div class="container calculator-container">
-    <h2>Shetland Breeding Calculator</h2>
-    <p>Select the known or estimated genotypes for the Ram and Ewe to calculate potential offspring coat color probabilities.</p>
 
-    <div class="parents-grid">
-      <!-- Sire (Ram) Selection -->
-      <div class="parent-box sire-box">
+
+
+
+  <hr class="divider" />
+
+
+
+
+
+  <!-- ========================================== -->
+
+  <!-- SECTION 2: BREEDING CALCULATOR            -->
+
+  <!-- ========================================== -->
+
+
+
+  <div class="container">
+
+
+
+    <h2>Shetland Sheep Breeding Calculator</h2>
+
+
+
+    <p class="subtitle">
+
+      Select the genetics for both Ram and Ewe to calculate possible offspring genotypes and phenotypes.
+
+    </p>
+
+
+
+
+
+    <div class="parents-container">
+
+
+
+
+
+      <!-- ====================================== -->
+
+      <!-- RAM SELECTION                          -->
+
+      <!-- ====================================== -->
+
+
+
+      <div class="parent-card">
+
+
+
         <h3>Sire (Ram)</h3>
-        
-        <label for="sireBase">Base Color Genotype:</label>
-        <select id="sireBase">
-          <option value="B_B">Black (BB - Homozygous)</option>
-          <option value="B_b">Black (Bb - Carrying Moorit)</option>
-          <option value="b_b">Moorit / Brown (bb)</option>
-        </select>
 
-        <label for="sireAgouti">Agouti Pattern Genotypes:</label>
-        <select id="sireAgouti1">
-          <option value="A_wt">White / Tan (A^wt)</option>
-          <option value="A_a">Solid / Self (A^a)</option>
-          <option value="A_km">Katmoget (A^km)</option>
-          <option value="A_gm">Gulmoget (A^gm)</option>
-        </select>
-        <select id="sireAgouti2">
-          <option value="A_wt">White / Tan (A^wt)</option>
-          <option value="A_a">Solid / Self (A^a)</option>
-          <option value="A_km">Katmoget (A^km)</option>
-          <option value="A_gm">Gulmoget (A^gm)</option>
-        </select>
 
-        <label for="sireSpotting">Spotting Genotype:</label>
-        <select id="sireSpotting">
-          <option value="S_S">Non-Spotted (SS)</option>
-          <option value="S_s">Carrying Spotting (Ss)</option>
-          <option value="s_s">Spotted (ss)</option>
-        </select>
+
+
+
+        <!-- Base Color -->
+
+        <div class="input-group">
+
+
+
+          <label for="ramBase">
+
+            Base Color Genotype:
+
+          </label>
+
+
+
+          <select id="ramBase">
+
+
+
+            <option value="BB">
+
+              Black (BB - Homozygous)
+
+            </option>
+
+
+
+            <option value="Bb">
+
+              Black (Bb - Carries Brown)
+
+            </option>
+
+
+
+            <option value="bb">
+
+              Brown (bb - Homozygous)
+
+            </option>
+
+
+
+          </select>
+
+
+
+        </div>
+
+
+
+
+
+        <!-- Pattern -->
+
+        <div class="input-group">
+
+
+
+          <label for="ramPattern1">
+
+            Pattern Genotype:
+
+          </label>
+
+
+
+          <div class="allele-pair-stacked">
+
+
+
+            <select id="ramPattern1">
+
+
+
+              <option value="Awt">
+
+                White (Awt - Most Dominant)
+
+              </option>
+
+
+
+              <option value="Agt">
+
+                Gulmoget (Agt)
+
+              </option>
+
+
+
+              <option value="Ag">
+
+                Greying (Ag)
+
+              </option>
+
+
+
+              <option value="Ab">
+
+                Katmoget (Ab)
+
+              </option>
+
+
+
+              <option value="Aa">
+
+                Solid (Aa - Recessive)
+
+              </option>
+
+
+
+            </select>
+
+
+
+
+
+            <select id="ramPattern2">
+
+
+
+              <option value="Aa">
+
+                Solid (Aa - Recessive)
+
+              </option>
+
+
+
+              <option value="Awt">
+
+                White (Awt - Most Dominant)
+
+              </option>
+
+
+
+              <option value="Agt">
+
+                Gulmoget (Agt)
+
+              </option>
+
+
+
+              <option value="Ag">
+
+                Greying (Ag)
+
+              </option>
+
+
+
+              <option value="Ab">
+
+                Katmoget (Ab)
+
+              </option>
+
+
+
+            </select>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+        <!-- Spotting -->
+
+        <div class="input-group">
+
+
+
+          <label for="ramSpot">
+
+            Spotting Genotype:
+
+          </label>
+
+
+
+          <select id="ramSpot">
+
+
+
+            <option value="SS">
+
+              SS (Non-Spotted)
+
+            </option>
+
+
+
+            <option value="Ss">
+
+              Ss (Carries Spotting)
+
+            </option>
+
+
+
+            <option value="ss">
+
+              ss (Spotted)
+
+            </option>
+
+
+
+          </select>
+
+
+
+        </div>
+
+
+
+
+
+        <!-- Ram Image -->
+
+        <div class="image-container">
+
+
+
+          <img
+
+            id="ramImage"
+
+            src="images/Black_White.png"
+
+            alt="Ram Phenotype"
+
+          >
+
+
+
+        </div>
+
+
+
       </div>
 
-      <!-- Dam (Ewe) Selection -->
-      <div class="parent-box dam-box">
+
+
+
+
+      <!-- ====================================== -->
+
+      <!-- EWE SELECTION                          -->
+
+      <!-- ====================================== -->
+
+
+
+      <div class="parent-card">
+
+
+
         <h3>Dam (Ewe)</h3>
 
-        <label for="damBase">Base Color Genotype:</label>
-        <select id="damBase">
-          <option value="B_B">Black (BB - Homozygous)</option>
-          <option value="B_b">Black (Bb - Carrying Moorit)</option>
-          <option value="b_b">Moorit / Brown (bb)</option>
-        </select>
 
-        <label for="damAgouti">Agouti Pattern Genotypes:</label>
-        <select id="damAgouti1">
-          <option value="A_wt">White / Tan (A^wt)</option>
-          <option value="A_a">Solid / Self (A^a)</option>
-          <option value="A_km">Katmoget (A^km)</option>
-          <option value="A_gm">Gulmoget (A^gm)</option>
-        </select>
-        <select id="damAgouti2">
-          <option value="A_wt">White / Tan (A^wt)</option>
-          <option value="A_a">Solid / Self (A^a)</option>
-          <option value="A_km">Katmoget (A^km)</option>
-          <option value="A_gm">Gulmoget (A^gm)</option>
-        </select>
 
-        <label for="damSpotting">Spotting Genotype:</label>
-        <select id="damSpotting">
-          <option value="S_S">Non-Spotted (SS)</option>
-          <option value="S_s">Carrying Spotting (Ss)</option>
-          <option value="s_s">Spotted (ss)</option>
-        </select>
+
+
+        <!-- Base Color -->
+
+        <div class="input-group">
+
+
+
+          <label for="eweBase">
+
+            Base Color Genotype:
+
+          </label>
+
+
+
+          <select id="eweBase">
+
+
+
+            <option value="BB">
+
+              Black (BB - Homozygous)
+
+            </option>
+
+
+
+            <option value="Bb">
+
+              Black (Bb - Carries Brown)
+
+            </option>
+
+
+
+            <option value="bb">
+
+              Brown (bb - Homozygous)
+
+            </option>
+
+
+
+          </select>
+
+
+
+        </div>
+
+
+
+
+
+        <!-- Pattern -->
+
+        <div class="input-group">
+
+
+
+          <label for="ewePattern1">
+
+            Pattern Genotype:
+
+          </label>
+
+
+
+          <div class="allele-pair-stacked">
+
+
+
+            <select id="ewePattern1">
+
+
+
+              <option value="Awt">
+
+                White (Awt - Most Dominant)
+
+              </option>
+
+
+
+              <option value="Agt">
+
+                Gulmoget (Agt)
+
+              </option>
+
+
+
+              <option value="Ag">
+
+                Greying (Ag)
+
+              </option>
+
+
+
+              <option value="Ab">
+
+                Katmoget (Ab)
+
+              </option>
+
+
+
+              <option value="Aa">
+
+                Solid (Aa - Recessive)
+
+              </option>
+
+
+
+            </select>
+
+
+
+
+
+            <select id="ewePattern2">
+
+
+
+              <option value="Aa">
+
+                Solid (Aa - Recessive)
+
+              </option>
+
+
+
+              <option value="Awt">
+
+                White (Awt - Most Dominant)
+
+              </option>
+
+
+
+              <option value="Agt">
+
+                Gulmoget (Agt)
+
+              </option>
+
+
+
+              <option value="Ag">
+
+                Greying (Ag)
+
+              </option>
+
+
+
+              <option value="Ab">
+
+                Katmoget (Ab)
+
+              </option>
+
+
+
+            </select>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+        <!-- Spotting -->
+
+        <div class="input-group">
+
+
+
+          <label for="eweSpot">
+
+            Spotting Genotype:
+
+          </label>
+
+
+
+          <select id="eweSpot">
+
+
+
+            <option value="SS">
+
+              SS (Non-Spotted)
+
+            </option>
+
+
+
+            <option value="Ss">
+
+              Ss (Carries Spotting)
+
+            </option>
+
+
+
+            <option value="ss">
+
+              ss (Spotted)
+
+            </option>
+
+
+
+          </select>
+
+
+
+        </div>
+
+
+
+
+
+        <!-- Ewe Image -->
+
+        <div class="image-container">
+
+
+
+          <img
+
+            id="eweImage"
+
+            src="images/Black_White.png"
+
+            alt="Ewe Phenotype"
+
+          >
+
+
+
+        </div>
+
+
+
       </div>
+
+
+
     </div>
 
-    <div class="calc-actions">
-      <button id="calculateBreeding">Calculate Offspring Probabilities</button>
+
+
+
+
+    <!-- Calculate Button -->
+
+    <div class="calc-button-container">
+
+
+
+      <button type="button" id="calculateBreed">
+
+        Calculate Offspring Outcomes
+
+      </button>
+
+
+
     </div>
 
-    <!-- Results Display -->
-    <div id="results" class="results-container">
-      <h3>Expected Offspring Probabilities</h3>
-      <div id="resultsContent">
-        <p>Select sire and dam genotypes above and click calculate to view results.</p>
-      </div>
+
+
+
+
+    <!-- Offspring Results -->
+
+    <div
+
+      id="breedingResults"
+
+      class="results-container"
+
+      hidden
+
+    >
+
+
+
+      <h3>
+
+        Expected Offspring Probabilities
+
+      </h3>
+
+
+
+      <div
+
+        id="resultsList"
+
+        class="results-grid"
+
+      ></div>
+
+
+
     </div>
+
+
+
   </div>
 
-  <!-- SECTION 3: GENETICS REFERENCE & INFORMATION -->
-  <div class="container info-container">
-    <h2>Shetland Coat Color Genetics Quick Reference</h2>
-    <div class="table-wrapper">
-      <table class="genetics-table">
-        <thead>
-          <tr>
-            <th>Locus</th>
-            <th>Allele</th>
-            <th>Dominance</th>
-            <th>Phenotype / Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Base Color (B)</td>
-            <td>B (Black)</td>
-            <td>Dominant</td>
-            <td>Black base pigmentation</td>
-          </tr>
-          <tr>
-            <td>Base Color (B)</td>
-            <td>b (Moorit)</td>
-            <td>Recessive</td>
-            <td>Brown / Moorit base pigmentation</td>
-          </tr>
-          <tr>
-            <td>Agouti (A)</td>
-            <td>A<sup>wt</sup></td>
-            <td>Most Dominant</td>
-            <td>White / Tan (covers underlying base patterns)</td>
-          </tr>
-          <tr>
-            <td>Agouti (A)</td>
-            <td>A<sup>km</sup> / A<sup>gm</sup></td>
-            <td>Codominant / Intermediate</td>
-            <td>Badgerface (Katmoget) / Reverse Badgerface (Gulmoget)</td>
-          </tr>
-          <tr>
-            <td>Agouti (A)</td>
-            <td>A<sup>a</sup></td>
-            <td>Most Recessive</td>
-            <td>Solid / Self-colored pattern</td>
-          </tr>
-          <tr>
-            <td>Spotting (S)</td>
-            <td>S</td>
-            <td>Dominant</td>
-            <td>Non-spotted (solid coat background)</td>
-          </tr>
-          <tr>
-            <td>Spotting (S)</td>
-            <td>s</td>
-            <td>Recessive</td>
-            <td>Pied / Spotted pattern (white markings)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+
+
+
+
+  <!-- ========================================== -->
+
+  <!-- JAVASCRIPT                                 -->
+
+  <!-- ========================================== -->
+
+
 
   <script src="script.js"></script>
+
+
+
 </body>
+
 </html>
