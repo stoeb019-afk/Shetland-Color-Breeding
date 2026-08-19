@@ -1,210 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shetland Sheep Genetics</title>
-<style>
-  body { font-family: Arial, sans-serif; text-align: center; background: #f9f9f9; padding: 20px; }
-  h1 { margin-bottom: 30px; }
-  .sheep-section { display: inline-block; vertical-align: top; width: 340px; background: #fff; padding: 20px; margin: 10px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
-  .sheep-section h2 { border-bottom: 3px solid #333; padding-bottom: 5px; margin-bottom: 15px; }
-  .section-content { display: flex; flex-direction: column; align-items: center; }
-  .section-content label { font-weight: bold; margin-top: 6px; }
-  .section-content select { margin: 3px; padding: 4px; width: 120px; text-align: center; }
-  img { margin-bottom: 12px; border-radius: 12px; width: 220px; height: auto; object-fit: contain; display: block; }
-  button { display: block; margin: 30px auto; padding: 10px 20px; font-size: 16px; border: none; border-radius: 8px; background-color: #333; color: white; cursor: pointer; }
-  button:hover { background-color: #555; }
-  #output div { display: inline-block; margin: 10px; text-align: center; width: 140px; }
-  #output img { width: 120px; height: auto; display: block; margin-bottom: 6px; border-radius: 8px; }
-  #output .phenotype { font-weight: bold; }
-  #output .percentage { font-style: italic; font-size: 0.9em; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shetland Sheep Color Genetics</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<h1>Shetland Sheep Genetics</h1>
+  <!-- ========================================== -->
+  <!-- SECTION 1: COLOR GENETICS EXPLORER (TOP)   -->
+  <!-- ========================================== -->
+  <div class="container">
+    <h1>Shetland Sheep Color Genetics</h1>
 
-<!-- RAM -->
-<div class="sheep-section">
-  <h2>Ram</h2>
-  <div class="section-content">
-    <img id="ramImage" src="images/Black_.png" alt="Ram">
+    <!-- Dropdowns -->
+    <div class="selectors">
+      <select id="baseColor">
+        <option value="">-- Select Base Color --</option>
+        <option value="Black">Black</option>
+        <option value="Brown">Brown</option>
+      </select>
 
-    <label>Color:</label>
-    <select id="ramColorA1">
-      <option value="" selected>Select</option>
-      <option value="B">Black (B)</option>
-      <option value="b">Brown (b)</option>
-    </select>
-    <select id="ramColorA2">
-      <option value="" selected>Select</option>
-      <option value="B">Black (B)</option>
-      <option value="b">Brown (b)</option>
-    </select>
+      <select id="pattern" disabled>
+        <option value="">-- Select Pattern --</option>
+        <option value="solid">Solid</option>
+        <option value="white">White</option>
+        <option value="Katmoget">Katmoget</option>
+        <option value="Gulmoget">Gulmoget</option>
+        <option value="Fading">Fading</option>
+      </select>
 
-    <label>Pattern:</label>
-    <select id="ramPatternA1">
-      <option value="" selected>Select</option>
-      <option value="Awt">White (Awt)</option>
-      <option value="Agt">Gulmoget (Agt)</option>
-      <option value="Ag">Fading (Ag)</option>
-      <option value="Ab">Katmoget (Ab)</option>
-      <option value="Aa">Solid (Aa)</option>
-    </select>
-    <select id="ramPatternA2">
-      <option value="" selected>Select</option>
-      <option value="Awt">White (Awt)</option>
-      <option value="Agt">Gulmoget (Agt)</option>
-      <option value="Ag">Fading (Ag)</option>
-      <option value="Ab">Katmoget (Ab)</option>
-      <option value="Aa">Solid (Aa)</option>
-    </select>
+      <select id="spots" disabled>
+        <option value="">-- Select Spotting --</option>
+        <option value="no">No Spotting</option>
+        <option value="yes">Spotted</option>
+      </select>
+    </div>
 
-    <label>Spotting:</label>
-    <select id="ramSpotA1">
-      <option value="" selected>Select</option>
-      <option value="S">No Spot (S)</option>
-      <option value="s">Spot (s)</option>
-    </select>
-    <select id="ramSpotA2">
-      <option value="" selected>Select</option>
-      <option value="S">No Spot (S)</option>
-      <option value="s">Spot (s)</option>
-    </select>
+    <!-- Image -->
+    <div class="image-container">
+      <img id="sheepImage" src="images/Blank_.png" alt="Shetland sheep">
+    </div>
+
+    <!-- Description -->
+    <p id="description" class="description">Select a base color to start learning about Shetland sheep genetics.</p>
+
+    <!-- Buttons -->
+    <div id="sheepButtons">
+      <button id="buttonThis">This is my sheep</button>
+      <button id="buttonDifferent">My sheep looks different</button>
+    </div>
   </div>
-</div>
 
-<!-- EWE -->
-<div class="sheep-section">
-  <h2>Ewe</h2>
-  <div class="section-content">
-    <img id="eweImage" src="images/Brown_.png" alt="Ewe">
+  <hr class="divider" />
 
-    <label>Color:</label>
-    <select id="eweColorA1">
-      <option value="" selected>Select</option>
-      <option value="B">Black (B)</option>
-      <option value="b">Brown (b)</option>
-    </select>
-    <select id="eweColorA2">
-      <option value="" selected>Select</option>
-      <option value="B">Black (B)</option>
-      <option value="b">Brown (b)</option>
-    </select>
+  <!-- ========================================== -->
+  <!-- SECTION 2: BREEDING CALCULATOR (BELOW)     -->
+  <!-- ========================================== -->
+  <div class="container">
+    <h2>Shetland Sheep Breeding Calculator</h2>
+    <p class="subtitle">Select the genetics for both Ram and Ewe to calculate possible offspring genotypes and phenotypes.</p>
 
-    <label>Pattern:</label>
-    <select id="ewePatternA1">
-      <option value="" selected>Select</option>
-      <option value="Awt">White (Awt)</option>
-      <option value="Agt">Gulmoget (Agt)</option>
-      <option value="Ag">Fading (Ag)</option>
-      <option value="Ab">Katmoget (Ab)</option>
-      <option value="Aa">Solid (Aa)</option>
-    </select>
-    <select id="ewePatternA2">
-      <option value="" selected>Select</option>
-      <option value="Awt">White (Awt)</option>
-      <option value="Agt">Gulmoget (Agt)</option>
-      <option value="Ag">Fading (Ag)</option>
-      <option value="Ab">Katmoget (Ab)</option>
-      <option value="Aa">Solid (Aa)</option>
-    </select>
+    <div class="parents-container">
+      <!-- RAM SELECTION -->
+      <div class="parent-card">
+        <h3>Sire (Ram)</h3>
+        
+        <div class="input-group">
+          <label for="ramBase">Base Color Genotype:</label>
+          <select id="ramBase">
+            <option value="BB">Black (BB - Homozygous)</option>
+            <option value="Bb">Black (Bb - Carries Brown)</option>
+            <option value="bb">Brown (bb - Homozygous)</option>
+          </select>
+        </div>
 
-    <label>Spotting:</label>
-    <select id="eweSpotA1">
-      <option value="" selected>Select</option>
-      <option value="S">No Spot (S)</option>
-      <option value="s">Spot (s)</option>
-    </select>
-    <select id="eweSpotA2">
-      <option value="" selected>Select</option>
-      <option value="S">No Spot (S)</option>
-      <option value="s">Spot (s)</option>
-    </select>
+        <div class="input-group">
+          <label>Pattern Genotype:</label>
+          <div class="allele-pair-stacked">
+            <select id="ramPattern1">
+              <option value="Awt">White (Awt - Most Dominant)</option>
+              <option value="Agt">Gulmoget (Agt)</option>
+              <option value="Ag">Greying (Ag)</option>
+              <option value="Ab">Katmoget (Ab)</option>
+              <option value="Aa">Solid (Aa - Recessive)</option>
+            </select>
+            <select id="ramPattern2">
+              <option value="Aa">Solid (Aa - Recessive)</option>
+              <option value="Awt">White (Awt - Most Dominant)</option>
+              <option value="Agt">Gulmoget (Agt)</option>
+              <option value="Ag">Greying (Ag)</option>
+              <option value="Ab">Katmoget (Ab)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="ramSpot">Spotting Genotype:</label>
+          <select id="ramSpot">
+            <option value="SS">SS (Non-Spotted)</option>
+            <option value="Ss">Ss (Carries Spotting)</option>
+            <option value="ss">ss (Spotted)</option>
+          </select>
+        </div>
+
+        <div class="image-container">
+          <img id="ramImage" src="images/Black_solid.png" alt="Ram Phenotype">
+        </div>
+      </div>
+
+      <!-- EWE SELECTION -->
+      <div class="parent-card">
+        <h3>Dam (Ewe)</h3>
+        
+        <div class="input-group">
+          <label for="eweBase">Base Color Genotype:</label>
+          <select id="eweBase">
+            <option value="BB">Black (BB - Homozygous)</option>
+            <option value="Bb">Black (Bb - Carries Brown)</option>
+            <option value="bb">Brown (bb - Homozygous)</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Pattern Genotype:</label>
+          <div class="allele-pair-stacked">
+            <select id="ewePattern1">
+              <option value="Awt">White (Awt - Most Dominant)</option>
+              <option value="Agt">Gulmoget (Agt)</option>
+              <option value="Ag">Greying (Ag)</option>
+              <option value="Ab">Katmoget (Ab)</option>
+              <option value="Aa">Solid (Aa - Recessive)</option>
+            </select>
+            <select id="ewePattern2">
+              <option value="Aa">Solid (Aa - Recessive)</option>
+              <option value="Awt">White (Awt - Most Dominant)</option>
+              <option value="Agt">Gulmoget (Agt)</option>
+              <option value="Ag">Greying (Ag)</option>
+              <option value="Ab">Katmoget (Ab)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="eweSpot">Spotting Genotype:</label>
+          <select id="eweSpot">
+            <option value="SS">SS (Non-Spotted)</option>
+            <option value="Ss">Ss (Carries Spotting)</option>
+            <option value="ss">ss (Spotted)</option>
+          </select>
+        </div>
+
+        <div class="image-container">
+          <img id="eweImage" src="images/Black_solid.png" alt="Ewe Phenotype">
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-button-container">
+      <button id="calculateBreed">Calculate Offspring Outcomes</button>
+    </div>
+
+    <!-- Offspring Results Output -->
+    <div id="breedingResults" class="results-container" style="display: none;">
+      <h3>Expected Offspring Probabilities</h3>
+      <div id="resultsList" class="results-grid"></div>
+    </div>
   </div>
-</div>
 
-<button id="calculateBtn">Calculate Offspring</button>
-
-<div id="output"></div>
-
-<script>
-// Helper functions
-function getColorPhenotype(a1,a2){ if(!a1&&!a2)return 'Black'; if(!a1)a1=a2; if(!a2)a2=a1; return a1==='B'||a2==='B'?'Black':'Brown'; }
-const patternDominance=["Awt","Agt","Ag","Ab","Aa"];
-const patternNames={Awt:"White",Agt:"Gulmoget",Ag:"Fading",Ab:"Katmoget",Aa:"Solid"};
-function getPatternPhenotype(a1,a2){ if(!a1&&!a2)return 'Solid'; if(!a1)a1=a2; if(!a2)a2=a1; const idx1=patternDominance.indexOf(a1); const idx2=patternDominance.indexOf(a2); return patternNames[idx1<idx2?a1:a2]; }
-function getSpotPhenotype(a1,a2){ if(!a1&&!a2) return 'No Spot'; if(!a1) a1=a2; if(!a2) a2=a1; if(a1==='S'||a2==='S') return 'No Spot'; return 'Spotted'; }
-
-// Update parent images
-function updateSheepImage(type){
-  const color1=document.getElementById(`${type}ColorA1`).value;
-  const color2=document.getElementById(`${type}ColorA2`).value;
-  const pattern1=document.getElementById(`${type}PatternA1`).value;
-  const pattern2=document.getElementById(`${type}PatternA2`).value;
-  const spot1=document.getElementById(`${type}SpotA1`).value;
-  const spot2=document.getElementById(`${type}SpotA2`).value;
-  const img=document.getElementById(`${type}Image`);
-  const color=getColorPhenotype(color1,color2);
-  const pattern=getPatternPhenotype(pattern1,pattern2);
-  const spot=getSpotPhenotype(spot1,spot2);
-  let fileName=`${color}_${pattern}`;
-  if(spot==='Spotted') fileName+=`_Spot`;
-  fileName+=`.png`;
-  img.onerror=()=>{img.src=`images/${color}_.png`;};
-  img.src=`images/${fileName}`;
-}
-
-// Event listeners for parent selects
-document.querySelectorAll('select').forEach(sel=>{
-  sel.addEventListener('change',()=>{
-    if(sel.id.startsWith('ram')) updateSheepImage('ram');
-    if(sel.id.startsWith('ewe')) updateSheepImage('ewe');
-  });
-});
-
-// Calculate offspring with collapsed phenotypes
-document.getElementById('calculateBtn').addEventListener('click', ()=>{
-  const ramColor=[ramColorA1.value,ramColorA2.value];
-  const eweColor=[eweColorA1.value,eweColorA2.value];
-  const ramPattern=[ramPatternA1.value,ramPatternA2.value];
-  const ewePattern=[ewePatternA1.value,ewePatternA2.value];
-  const ramSpot=[ramSpotA1.value,ramSpotA2.value];
-  const eweSpot=[eweSpotA1.value,eweSpotA2.value];
-
-  const outcomes={};
-  for(let c1 of ramColor) for(let c2 of eweColor)
-    for(let p1 of ramPattern) for(let p2 of ewePattern)
-    for(let s1 of ramSpot) for(let s2 of eweSpot){
-      if(!c1&&!c2&&!p1&&!p2&&!s1&&!s2) continue;
-      const color=getColorPhenotype(c1,c2);
-      const pattern=getPatternPhenotype(p1,p2);
-      const spot=getSpotPhenotype(s1,s2);
-      const phenotype = `${color} ${pattern} ${spot}`;
-      outcomes[phenotype] = (outcomes[phenotype]||0)+1;
-    }
-
-  const total=Object.values(outcomes).reduce((a,b)=>a+b,0);
-  const sorted = Object.entries(outcomes).sort((a,b)=>b[1]-a[1]);
-
-  let html='<h3>Possible Offspring:</h3>';
-  for(let [phenotype,count] of sorted){
-    const pct = ((count/total)*100).toFixed(1);
-    const parts = phenotype.split(' ');
-    let fileName=`${parts[0]}_${parts[1]}`;
-    if(parts[2]==='Spotted') fileName+=`_Spot`;
-    fileName+=`.png`;
-    html+=`<div>
-      <img src="images/${fileName}" alt="${phenotype}">
-      <span class="phenotype">${phenotype}</span>
-      <span class="percentage">${pct}%</span>
-    </div>`;
-  }
-
-  document.getElementById('output').innerHTML=html;
-});
-</script>
-
+  <script src="script.js"></script>
 </body>
 </html>
