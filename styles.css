@@ -110,9 +110,6 @@ img {
   margin-bottom: 15px;
 }
 
-
-/* Base color, pattern, and spotting dropdown boxes */
-
 .selectors select {
   padding: 8px 30px 8px 12px;
   font-size: 0.9rem;
@@ -159,16 +156,6 @@ img {
   line-height: 1.5;
 }
 
-
-/* ==========================================
-   DESCRIPTION PARAGRAPHS
-   ========================================== */
-
-/*
-   Each selected genetics description is now
-   inserted as its own <p> element.
-*/
-
 .description p,
 #description p {
   display: block;
@@ -186,10 +173,6 @@ img {
    SHEEP BUTTONS
    ========================================== */
 
-/*
-   Hidden until all three selections are made.
-*/
-
 #sheepButtons {
   display: none;
   justify-content: center;
@@ -199,16 +182,9 @@ img {
   width: 100%;
 }
 
-
-/*
-   JavaScript adds this class once the user
-   has selected base color, pattern, and spotting.
-*/
-
 #sheepButtons.visible {
   display: flex !important;
 }
-
 
 #sheepButtons button {
   background-color: var(--button-red);
@@ -323,11 +299,6 @@ img {
   margin: 0 auto 10px auto;
 }
 
-
-/* ==========================================
-   RESULT TEXT
-   ========================================== */
-
 .result-card h4 {
   margin: 8px 0;
 }
@@ -342,7 +313,6 @@ img {
    ========================================== */
 
 @media (max-width: 600px) {
-
   body {
     padding: 15px 10px;
   }
@@ -371,5 +341,4 @@ img {
     width: 100%;
     max-width: none;
   }
-
 }
